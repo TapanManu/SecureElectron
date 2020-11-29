@@ -1,5 +1,5 @@
-const open = require('open');
+const open = require("open");
 
 // opens the url in the default browser 
-open('https://electronjs.org');
+open("https://electronjs.org");
  

@@ -1,6 +1,6 @@
-const { readFileSync } = require('fs')
+const { readFileSync } = require("fs");
 
 window.readConfig = function () {
-  const data = readFileSync('./config.json')
-  return data
-}
+  const data = readFileSync("./config.json");
+  return data;
+};
