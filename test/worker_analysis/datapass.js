@@ -14,37 +14,38 @@
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
+var worker = new Worker("worker_analysis/webworker.js");
 
-const { app, BrowserWindow } = require("electron"  );
+const { performance,PerformanceObserver } = require("perf_hooks");
 
+//ARRAY
+/*let str_data =[];
+for(let i=0;i<500;i++){
+    str_data.push(i);
+}*/
 
-function createWindow () {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true,
-      nodeIntegrationInWorker: true
-    }
-  });
-
-  //win.loadFile("/home/tapan/vm2/vm2/test/caller.html");
-  win.loadFile("./index.html");
-  win.webContents.openDevTools();
+//BLOB
+/*const bytes = new Uint8Array(100);
+for(let i=0;i<100;i++){
+    bytes[i] = 32+i;
 }
+const blob = new Blob([bytes.buffer],{type:'text/plain'});
+*/
 
-app.whenReady().then(createWindow);
+//OBJECTS
+//var obj = {framework:"electron",web:"worker",numbers:5000,color:"blue"};
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
+//FUNCTION
+/*function func(){
+    return 5;
+}*/
 
+let t1 = performance.now();
+worker.addEventListener("message", function(e) {
+  console.log("Time async: ", e.data);
+}, false);
 
+//console.log(t1);
 
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+//worker.postMessage(func()); // Send data to our worker.
+worker.postMessage({obj,t1});
