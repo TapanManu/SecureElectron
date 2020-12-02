@@ -1,7 +1,7 @@
 
 /* 
  * This file is part of the  distribution (https://github.com/aicore/SecureElectron).
- * Copyright (c) 2015 <your name> and Core.ai 
+ * Copyright (c) 2015 Tapan Manu and Core.ai 
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,13 @@
  *
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see http://www.gnu.org/licenses/.
- */const { readFileSync } = require("fs");
+ */
+
+/*
+Preload files
+*/
+
+const { readFileSync } = require("fs");
 
 window.readConfig = function () {
   const data = readFileSync("./config.json");

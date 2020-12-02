@@ -1,6 +1,6 @@
 /* 
  * This file is part of the  distribution (https://github.com/aicore/SecureElectron).
- * Copyright (c) 2015 <your name> and Core.ai 
+ * Copyright (c) 2015 Tapan Manu and Core.ai 
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,11 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-const { app, BrowserWindow } = require("electron"  );
+
+ /*
+      The main file for Electron applications
+ */
+const { app, BrowserWindow } = require("electron");
 
 
 function createWindow () {
@@ -29,7 +33,7 @@ function createWindow () {
   });
 
   //win.loadFile("/home/tapan/vm2/vm2/test/caller.html");
-  win.loadFile("./index.html");
+  win.loadFile("./sample.html");
   win.webContents.openDevTools();
 }
 

@@ -1,6 +1,6 @@
 /* 
  * This file is part of the  distribution (https://github.com/aicore/SecureElectron).
- * Copyright (c) 2015 <your name> and Core.ai 
+ * Copyright (c) 2015 Tapan Manu and Core.ai 
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

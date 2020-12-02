@@ -17,7 +17,7 @@
 
 /*
 EXPERIMENT: Performance analysis of various javascript objects read operation
-in web workers
+in VM2 Sandbox
 
 AIM:
 compares the time taken to perform read operation of various 
@@ -25,38 +25,55 @@ objects and analyses the performance.
 
 */
 
-var worker = new Worker("worker_analysis/webworker.js");
 
+const { VM } = require('vm2');
 const { performance,PerformanceObserver } = require("perf_hooks");
 
-//ARRAY
-/*let str_data =[];
-for(let i=0;i<500;i++){
-    str_data.push(i);
-}*/
-
-//BLOB
-/*const bytes = new Uint8Array(100);
-for(let i=0;i<100;i++){
-    bytes[i] = 32+i;
+let t;
+const sandbox = {
+  get_input(data) {
+    return 'input:' + data;
+  },
+  display(data) {
+    console.log('Data:', data);
+    t = performance.now();
+  }
 }
-const blob = new Blob([bytes.buffer],{type:'text/plain'});
-*/
 
-//OBJECTS
-//var obj = {framework:"electron",web:"worker",numbers:5000,color:"blue"};
-
-//FUNCTION
-/*function func(){
-    return 5;
-}*/
+const vm = new VM({ sandbox });
 
 let t1 = performance.now();
-worker.addEventListener("message", function(e) {
-  console.log("Time async: ", e.data);
-}, false);
 
-//console.log(t1);
+/*
+vm.run(`
+let str_data =[];
+for(let i=0;i<500;i++){
+    str_data.push(i.toString());
+}
+const ret = get_input(str_data[1]);
+display(ret);
+`);
 
-//worker.postMessage(func()); // Send data to our worker.
-worker.postMessage({obj,t1});
+vm.run(`
+    const bytes = new Uint8Array(10);
+    for(let i=0;i<10;i++){
+        bytes[i] = 32+i;
+    }
+    const blob = new Blob([bytes.buffer],{type:'text/plain'});
+    display(blob);
+`);
+
+vm.run(`
+    var obj = {framework:"electron",web:"worker",numbers:5000,color:"blue"};
+    const ret = get_input(obj['framework']);
+    display(ret);
+`);
+*/
+vm.run(`
+    function fun(){
+        return "hello world";
+    }
+
+    display(fun());
+`);
+console.log(t-t1);

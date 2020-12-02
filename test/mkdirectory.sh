@@ -1,4 +1,5 @@
 #! /bin/bash
+# shell program to create required no of files in a directory
 
 mkdir testdir
 

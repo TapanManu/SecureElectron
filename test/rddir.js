@@ -1,6 +1,6 @@
 /* 
  * This file is part of the  distribution (https://github.com/aicore/SecureElectron).
- * Copyright (c) 2015 <your name> and Core.ai 
+ * Copyright (c) 2015 Tapan Manu and Core.ai 
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,16 @@
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
+
+/*
+EXPERIMENT: Performance analysis of Asynchronous and synchrounous 
+directory read operation
+
+AIM:
+compares the time taken to perform directory read operation of various 
+directories and analyses the performance.
+
+*/
 const { app, BrowserWindow, dialog, remote } = require("electron");
 const path = require("path");
 
@@ -81,7 +91,7 @@ function lssync_rec(flag){
             lssync_rec(path.join("./testdir",file),0);
         })
         t7 = performance.now();
-        if(flag==1){
+        if(flag===1){
             console.log("sync recursive read:"+(t7-t6)+" ms");
         }
     }

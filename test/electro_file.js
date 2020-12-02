@@ -1,6 +1,6 @@
 /* 
  * This file is part of the  distribution (https://github.com/aicore/SecureElectron).
- * Copyright (c) 2015 <your name> and Core.ai 
+ * Copyright (c) 2015 Tapan Manu and Core.ai 
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,14 @@
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
+ /* Experiment : Asynchronous and synchronous file and directory read
+    Aim:
+    The given experiment aims :
+    i)  perform file read operation synchronously and asynchronously.
+    ii) perform directory read operation synchronously and asynchronously.
+        It makes use of fs API.
+ */
+
 const { app, BrowserWindow, dialog, remote } = require("electron");
 const path = require("path");
 
@@ -22,7 +30,7 @@ const path = require("path");
 
 var fs = require("fs"); // Load the File System to execute our common tasks (CRUD)
 
-const { performance,PerformanceObserver } = require("perf_hooks");
+const { performance} = require("perf_hooks");
 let t0,t1;
 let maxd=0;
 

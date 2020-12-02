@@ -1,6 +1,6 @@
 /* 
  * This file is part of the  distribution (https://github.com/aicore/SecureElectron).
- * Copyright (c) 2015 <your name> and Core.ai 
+ * Copyright (c) 2015 Tapan Manu and Core.ai 
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,16 @@
  * You should have received a copy of the GNU General Public License 
  * along with this program. If not, see http://www.gnu.org/licenses/.
  */
+
+/*
+EXPERIMENT: Performance analysis of Asynchronous and synchrounous 
+file read operation
+
+AIM:
+compares the time taken to perform read operation of various  sized
+files and analyses the performance.
+
+*/
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const fs = require("fs");

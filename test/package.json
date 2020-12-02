@@ -8,12 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Tapan Manu",
+  "license": "GPL V3",
   "devDependencies": {
     "electron": "^10.1.5"
   },
   "dependencies": {
-    "open": "^7.3.0"
+    "open": "^7.3.0",
+    "vm2": "^3.9.2"
   }
 }
