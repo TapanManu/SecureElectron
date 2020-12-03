@@ -33,7 +33,7 @@ function createWindow () {
   });
 
   //win.loadFile("/home/tapan/vm2/vm2/test/caller.html");
-  win.loadFile("./sample.html");
+  win.loadFile("./sandbox/caller.html");
   win.webContents.openDevTools();
 }
 
