@@ -21,8 +21,8 @@
     i)  Modifying the sandbox to direct url parsing only for allowed hosts
    
  */
-const {VM, NodeVM} = require('vm2');
-const { performance,PerformanceObserver } = require('perf_hooks');
+const {VM, NodeVM} = require("vm2");
+const { performance,PerformanceObserver } = require("perf_hooks");
 
 
 
@@ -46,20 +46,20 @@ let ext = {
     }   
 };
 const vm = new NodeVM( {
-    console: 'inherit',
+    console: "inherit",
     // pass our declared ext variable to the sandbox
     sandbox: { ext },
     require: {
       external: true,
-      builtin: ['url','perf_hooks'],
-      root: './',
+      builtin: ["url","perf_hooks"],
+      root: "./",
     },
   } );
 try{
     //defining whether it is part of allowed hosts
     vm.run(`
-        const request = require('url');
-        const {performance} = require('perf_hooks');
+        const request = require("url");
+        const {performance} = require("perf_hooks");
         const url="https://stackoverflow.com/questions/38811259/how-to-access-a-url-using-node-js";
         const host="github.com";
         try{

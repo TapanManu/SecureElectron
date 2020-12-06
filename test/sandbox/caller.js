@@ -21,22 +21,22 @@
     i)  perform file read operation synchronously in sandbox context
    
  */
-const {VM, NodeVM} = require('vm2');
-const { performance,PerformanceObserver } = require('perf_hooks');
-const fs = require('fs');
-//const file = '/home/tapan/vm2/vm2/test/file4.txt'; 
+const {VM, NodeVM} = require("vm2");
+const { performance,PerformanceObserver } = require("perf_hooks");
+const fs = require("fs");
+//const file = "/home/tapan/vm2/vm2/test/file4.txt"; 
 // By providing a file name as second argument you enable breakpoints
-const script = 'module.exports = function fread(file){fs.readFileSync(file); console.log(5)}';
+const script = "module.exports = function fread(file){fs.readFileSync(file); console.log(5)}";
 let ext = {};
-//const asyn = 'fs.readFile(file,(error,data)=>{if(error){console.log(error);return;}';
+//const asyn = "fs.readFile(file,(error,data)=>{if(error){console.log(error);return;}";
 const vm = new NodeVM( {
-    console: 'inherit',
+    console: "inherit",
     // pass our declared ext variable to the sandbox
     sandbox: { ext },
     require: {
       external: true,
-      builtin: ['fs', 'path'],
-      root: './',
+      builtin: ["fs", "path"],
+      root: "./",
     },
     console,
   } );
@@ -47,5 +47,5 @@ try{
     console.log(t2-t1);
 }
 catch(err){
-    console.error('Failed to execute script.', err);
+    console.error("Failed to execute script.", err);
 }

@@ -21,10 +21,10 @@
     i)  perform file read operation asynchronously in sandbox context only in limited paths allowed
    
  */
-const {VM, NodeVM, VMError} = require('vm2');
-const { performance,PerformanceObserver } = require('perf_hooks');
-const fs  = require('fs');
-const path = require('path');
+const {VM, NodeVM} = require("vm2");
+const { performance} = require("perf_hooks");
+const fs  = require("fs");
+const path = require("path");
 
 
 // By providing a file name as second argument you enable breakpoints
@@ -63,24 +63,24 @@ let ext = {
 };
 
 const vm = new NodeVM( {
-    console: 'inherit',
+    console: "inherit",
     // pass our declared ext variable to the sandbox
     sandbox: { ext },
     require: {
       external: true,
-      builtin: ['fs', 'path'],
-      root: './',
+      builtin: ["fs", "path"],
+      root: "./",
     },
   } );
 try{
     vm.run(`
-        const fs = require('fs');
-        const path = require('path');
+        const fs = require("fs");
+        const path = require("path");
         let file = "sandbox/file4.txt";
         let root = file.split("/")[0];
         ext.access_path(root,file);
     `)
 }
 catch(err){
-    console.error('Failed to execute script.', err);
+    console.error("Failed to execute script.", err);
 }
