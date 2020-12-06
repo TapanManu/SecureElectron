@@ -24,9 +24,9 @@
 const {VM, NodeVM} = require('vm2');
 const { performance,PerformanceObserver } = require('perf_hooks');
 const fs = require('fs');
-const file = '/home/tapan/vm2/vm2/test/file4.txt'; 
+//const file = '/home/tapan/vm2/vm2/test/file4.txt'; 
 // By providing a file name as second argument you enable breakpoints
-const script = 'module.exports = function fread(file){fs.readFileSync(file)}';
+const script = 'module.exports = function fread(file){fs.readFileSync(file); console.log(5)}';
 let ext = {};
 //const asyn = 'fs.readFile(file,(error,data)=>{if(error){console.log(error);return;}';
 const vm = new NodeVM( {
@@ -38,6 +38,7 @@ const vm = new NodeVM( {
       builtin: ['fs', 'path'],
       root: './',
     },
+    console,
   } );
 try{
     let t1 = performance.now();
