@@ -26,23 +26,29 @@ objects and analyses the performance.
 */
 
 
-const { VM } = require('vm2');
-const { performance,PerformanceObserver } = require("perf_hooks");
+const { NodeVM } = require('vm2');
+const { performance } = require("perf_hooks");
 
 let t;
 const sandbox = {
   get_input(data) {
     return 'input:' + data;
   },
-  display(data) {
-    console.log('Data:', data);
-    t = performance.now();
+  display(time) {
+    console.log('Time:', time);
+    
   }
 }
 
-const vm = new VM({ sandbox });
-
-let t1 = performance.now();
+const vm = new NodeVM({
+  console:"inherit",
+  sandbox: { sandbox },
+  require: {
+    external: true,
+    builtin: ["fs","perf_hooks"],
+    root: "./",
+  },
+});
 
 /*
 vm.run(`
@@ -69,11 +75,42 @@ vm.run(`
     display(ret);
 `);
 */
-vm.run(`
-    function fun(){
-        return "hello world";
-    }
 
-    display(fun());
-`);
-console.log(t-t1);
+try{
+  /*vm.run(`
+      const {performance}  = require("perf_hooks");
+      const strArray = ["hello","hi","strings"];
+      let t1 = performance.now();
+      sandbox.get_input(strArray[0]);
+      let t2 = performance.now();
+      sandbox.display(t2-t1);
+  `);*/
+  /*
+  vm.run(`
+      const {performance}  = require("perf_hooks");
+      let str_data =[];
+      for(let i=0;i<500;i++){
+          str_data.push(i);
+      }
+      let t1 = performance.now();
+      sandbox.get_input(str_data[400]);
+      let t2 = performance.now();
+      sandbox.display(t2-t1);
+  `);
+  */
+  /*
+ vm.run(`
+      const {performance}  = require("perf_hooks");
+      var obj = {framework:"electron",web:"worker",numbers:5000,color:"blue"};
+      let t1 = performance.now();
+      sandbox.get_input(obj["web"]);
+      let t2 = performance.now();
+      sandbox.display(t2-t1);
+  `);
+  */
+ 
+  
+}
+catch(err){
+  console.log(err);
+}

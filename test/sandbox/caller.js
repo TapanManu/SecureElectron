@@ -26,8 +26,14 @@ const { performance,PerformanceObserver } = require("perf_hooks");
 const fs = require("fs");
 //const file = "/home/tapan/vm2/vm2/test/file4.txt"; 
 // By providing a file name as second argument you enable breakpoints
-const script = "module.exports = function fread(file){fs.readFileSync(file); console.log(5)}";
-let ext = {};
+
+let ext = {
+  fread(file){
+    fs.readFileSync("../file4.txt"); 
+    let t2 = performance.now();
+    console.log(t2-t1);
+  }
+};
 //const asyn = "fs.readFile(file,(error,data)=>{if(error){console.log(error);return;}";
 const vm = new NodeVM( {
     console: "inherit",
@@ -35,16 +41,24 @@ const vm = new NodeVM( {
     sandbox: { ext },
     require: {
       external: true,
-      builtin: ["fs", "path"],
+      builtin: ["fs","perf_hooks"],
       root: "./",
     },
-    console,
+    
   } );
 try{
+    vm.run(`
+    const fs = require("fs");
+    const {performance} = require("perf_hooks");
     let t1 = performance.now();
-    vm.run(script);
-    let t2 = performance.now();
-    console.log(t2-t1);
+    function fread(){
+      fs.readFileSync("sandbox/file7.txt"); 
+      let t2 = performance.now();
+      console.log(t2-t1);
+    }
+    
+    fread();
+    `);
 }
 catch(err){
     console.error("Failed to execute script.", err);
