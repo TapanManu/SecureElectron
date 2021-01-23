@@ -25,62 +25,63 @@ const {VM, NodeVM} = require("vm2");
 const { performance} = require("perf_hooks");
 const fs  = require("fs");
 const path = require("path");
-
-
+const globs = "/";
+ 
 // By providing a file name as second argument you enable breakpoints
-
+ 
 let ext = {
-  // defining a customised sandbox 
-    allowed_paths:["sandbox"],  //specifying * allows all paths
-    isChildOf(child, parent){
-      if (child === parent) return false
-      const parentTokens = parent.toString().split(path.sep).filter(i => i.length)
-      return parentTokens.every((t, i) => child.split(path.sep)[i] === t)
-    },
-    
-    
-    verify_path(pathname){
-        return this.allowed_paths.includes(pathname)|| this.allowed_paths[0]==="*";
-    },
-    access_path(pathname,filename){
-        if(this.verify_path(pathname)){
-            let t1 = performance.now();
-            fs.readFile(filename,(error,data)=>{
-              if(error){
-                console.log(error);
-                return;
-            }
-            let t2 = performance.now();
-            console.log(t2-t1);
-            });
-        }
-        else{
-            console.log("access denied");
-        }
-    }   
-
-
+ // defining a customised sandbox
+ 
+   allowed_paths:[globs],  //specifying * allows all paths
+   isChildOf(child, parent){
+     if (child === parent) return false
+     const parentTokens = parent.toString().split(path.sep).filter(i => i.length)
+     return parentTokens.every((t, i) => child.split(path.sep)[i] === t)
+   },
+  
+  
+   verify_path(pathname){
+       return this.allowed_paths.includes(pathname)|| this.allowed_paths[0]==="*";
+   },
+   access_path(pathname,filename){
+       if(this.verify_path(pathname)){
+           let t1 = performance.now();
+           fs.readFile(filename,(error,data)=>{
+             if(error){
+               console.log(error);
+               return;
+           }
+           let t2 = performance.now();
+           console.log(t2-t1);
+           });
+       }
+       else{
+           console.log("access denied");
+       }
+   }  
+ 
+ 
 };
-
+ 
 const vm = new NodeVM( {
-    console: "inherit",
-    // pass our declared ext variable to the sandbox
-    sandbox: { ext },
-    require: {
-      external: true,
-      builtin: ["fs", "path"],
-      root: "./",
-    },
-  } );
+   console: "inherit",
+   // pass our declared ext variable to the sandbox
+   sandbox: { ext },
+   require: {
+     external: true,
+     builtin: ["fs", "path"],
+     root: "./",
+   },
+ } );
 try{
-    vm.run(`
-        const fs = require("fs");
-        const path = require("path");
-        let file = "sandbox/file4.txt";
-        let root = file.split("/")[0];
-        ext.access_path(root,file);
-    `)
+   vm.run(`
+       const fs = require("fs");
+       const path = require("path");
+       let file =process.cwd()+"demo/file4.txt";
+       let root = "/";
+       ext.access_path(root,file);
+   `)
 }
 catch(err){
-    console.error("Failed to execute script.", err);
+   console.error("Failed to execute script.", err);
 }
